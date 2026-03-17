@@ -203,7 +203,7 @@
   <div class="footer-inner">
     <div class="footer-contact">
       <strong>Curaviva Thurgau</strong><br>
-      <a href="/cdn-cgi/l/email-protection#314154497152444350475847501c45561f5259"><span class="__cf_email__" data-cfemail="18687d60587b6d6a796e716e79356c7f367b70">[email&#160;protected]</span></a><br>
+      <a href="mailto:pex@curaviva-tg.ch">pex@curaviva-tg.ch</a><br>
       Tel.: 071 622 05 27
     </div>
   </div>
@@ -282,7 +282,7 @@
   </div>
 </div>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script>
 const API = "https://script.google.com/macros/s/AKfycbyFRLe-uGBX3HNtLlOwHEfmJBf6IPZjgdlkOLEeLMiUu71xocTM-wif6H032wlLEJvP/exec";
 const EJS_PUBLIC_KEY="QwUTOxuOY0MOmc3EP", EJS_SERVICE_ID="service_c8m7443", EJS_TEMPLATE_ID="template_nz4cyop", ADMIN_EMAIL="pex@curaviva-tg.ch", ADMIN_PW="CVTG2026!";
 
@@ -621,4 +621,11 @@ async function doBook(){
 }
 function closeSuccess(){document.getElementById("success-overlay").classList.remove("show");}
 
-["logi
+["login-overlay","booking-overlay","success-overlay","delete-overlay"].forEach(id=>{
+  document.getElementById(id).addEventListener("click",function(e){if(e.target===this)this.classList.remove("show");});
+});
+
+loadData();
+</script>
+</body>
+</html>
