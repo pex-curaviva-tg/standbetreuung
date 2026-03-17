@@ -178,7 +178,7 @@
   <div class="error-banner" id="error-banner">⚠️ Verbindung zum Server fehlgeschlagen. Bitte Seite neu laden.</div>
   <div class="admin-panel" id="admin-panel">
     <div class="admin-panel-title">👁 Admin-Modus aktiv</div>
-    <div class="admin-panel-sub">Klicke auf «🗑 Löschen» bei einer Buchung um den Slot wieder freizugeben.</div>
+    <div class="admin-panel-sub">Klicke auf «🗑 Stornieren» bei einer Buchung um den Slot wieder freizugeben. Die Buchung bleibt im Google Sheet als «GELÖSCHT» markiert.</div>
     <div class="admin-stats" id="admin-stats"></div>
   </div>
   <div class="event-tabs">
@@ -203,7 +203,7 @@
   <div class="footer-inner">
     <div class="footer-contact">
       <strong>Curaviva Thurgau</strong><br>
-      <a href="mailto:pex@curaviva-tg.ch">pex@curaviva-tg.ch</a><br>
+      <a href="/cdn-cgi/l/email-protection#314154497152444350475847501c45561f5259"><span class="__cf_email__" data-cfemail="18687d60587b6d6a796e716e79356c7f367b70">[email&#160;protected]</span></a><br>
       Tel.: 071 622 05 27
     </div>
   </div>
@@ -273,16 +273,16 @@
 <div class="overlay" id="delete-overlay">
   <div class="modal confirm-modal">
     <div class="confirm-icon">🗑️</div>
-    <div class="confirm-title">Buchung löschen?</div>
+    <div class="confirm-title">Buchung stornieren?</div>
     <div class="confirm-info" id="del-info"></div>
     <div class="confirm-actions">
       <button class="btn-del-cancel" onclick="closeDelete()">Abbrechen</button>
-      <button class="btn-del-confirm" onclick="confirmDelete()">Ja, löschen</button>
+      <button class="btn-del-confirm" onclick="confirmDelete()">Ja, stornieren</button>
     </div>
   </div>
 </div>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 const API = "https://script.google.com/macros/s/AKfycbyFRLe-uGBX3HNtLlOwHEfmJBf6IPZjgdlkOLEeLMiUu71xocTM-wif6H032wlLEJvP/exec";
 const EJS_PUBLIC_KEY="QwUTOxuOY0MOmc3EP", EJS_SERVICE_ID="service_c8m7443", EJS_TEMPLATE_ID="template_nz4cyop", ADMIN_EMAIL="pex@curaviva-tg.ch", ADMIN_PW="CVTG2026!";
 
@@ -446,7 +446,7 @@ function render(){
       const b=getB(cEvent,cType,date,slot.id);
       const el=document.createElement("div");el.className="slot"+(b?" slot-booked":"");
       if(b){
-        el.innerHTML='<div class="slot-icon">'+slotIcon(slot.id)+'</div><div class="slot-name dimmed">'+slot.label+'</div><div class="slot-time dimmed">'+slot.time+'</div><div class="booked-box" style="background:'+c.pill+';border:1.5px solid '+c.pb+'"><div class="booked-label" style="color:'+c.textColor+'">&#10003; BELEGT</div><div class="booked-org" style="color:'+c.accent+'">'+b.inst+'</div><div class="booked-person">'+b.bvname+' &middot; '+b.tel+'</div><button class="delete-btn" onclick="askDelete(\''+cEvent+'\',\''+cType+'\',\''+date+'\',\''+slot.id+'\')">&#x1F5D1; Löschen</button></div>';
+        el.innerHTML='<div class="slot-icon">'+slotIcon(slot.id)+'</div><div class="slot-name dimmed">'+slot.label+'</div><div class="slot-time dimmed">'+slot.time+'</div><div class="booked-box" style="background:'+c.pill+';border:1.5px solid '+c.pb+'"><div class="booked-label" style="color:'+c.textColor+'">&#10003; BELEGT</div><div class="booked-org" style="color:'+c.accent+'">'+b.inst+'</div><div class="booked-person">'+b.bvname+' &middot; '+b.tel+'</div><button class="delete-btn" onclick="askDelete(\''+cEvent+'\',\''+cType+'\',\''+date+'\',\''+slot.id+'\')">&#x1F5D1; Stornieren</button></div>';
       }else{
         el.innerHTML='<div class="slot-icon">'+slotIcon(slot.id)+'</div><div class="slot-name">'+slot.label+'</div><div class="slot-time">'+slot.time+'</div><button class="book-btn" onclick="openM(\''+date+'\',\''+slot.id+'\',\''+slot.label+'\',\''+slot.time+'\',\''+slot.id+'\')">+ Anmelden</button>';
       }
@@ -491,7 +491,7 @@ function askDelete(ev,ty,date,slotId){
   const evData=EVENTS[ev];
   const dateData=evData.dates.find(d=>d.date===date);
   const slot=dateData?dateData.slots.find(s=>s.id===slotId):{label:slotId,time:""};
-  document.getElementById("del-info").innerHTML="Willst du die Buchung von <strong>"+b.inst+"</strong> löschen?<br>"+fmtDate(date)+" · "+slot.label+" "+slot.time+"<br><br>Der Slot wird wieder frei.";
+  document.getElementById("del-info").innerHTML="Willst du die Buchung von <strong>"+b.inst+"</strong> stornieren?<br>"+fmtDate(date)+" · "+slot.label+" "+slot.time+"<br><br>Der Slot wird wieder frei. Die Buchung bleibt im Google Sheet als 'GELÖSCHT' markiert.";
   document.getElementById("delete-overlay").classList.add("show");
 }
 function closeDelete(){document.getElementById("delete-overlay").classList.remove("show");delTarget=null;}
@@ -621,11 +621,4 @@ async function doBook(){
 }
 function closeSuccess(){document.getElementById("success-overlay").classList.remove("show");}
 
-["login-overlay","booking-overlay","success-overlay","delete-overlay"].forEach(id=>{
-  document.getElementById(id).addEventListener("click",function(e){if(e.target===this)this.classList.remove("show");});
-});
-
-loadData();
-</script>
-</body>
-</html>
+["logi
