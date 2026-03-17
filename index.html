@@ -72,7 +72,7 @@
     .slot { background: #fff; padding: 18px 20px; cursor: pointer; transition: background 0.15s; }
     .slot:hover:not(.slot-booked) { background: #f0fdfd; }
     .slot.slot-booked { cursor: default; }
-    .slot-icon { font-size: 22px; margin-bottom: 6px; }
+    .slot-icon { width: 28px; height: 28px; margin-bottom: 8px; display: flex; align-items: center; justify-content: center; }
     .slot-name { font-weight: 700; font-size: 14px; margin-bottom: 2px; color: #1e293b; }
     .slot-time { font-size: 12px; color: #94a3b8; margin-bottom: 12px; }
     .slot-name.dimmed, .slot-time.dimmed { color: #94a3b8; }
@@ -203,7 +203,7 @@
   <div class="footer-inner">
     <div class="footer-contact">
       <strong>Curaviva Thurgau</strong><br>
-      <a href="/cdn-cgi/l/email-protection#7707120f3714020516011e01165a031059141f"><span class="__cf_email__" data-cfemail="b3c3d6cbf3d0c6c1d2c5dac5d29ec7d49dd0db">[email&#160;protected]</span></a><br>
+      <a href="mailto:pex@curaviva-tg.ch">pex@curaviva-tg.ch</a><br>
       Tel.: 071 622 05 27
     </div>
   </div>
@@ -282,7 +282,7 @@
   </div>
 </div>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script>
 const API = "https://script.google.com/macros/s/AKfycbyFRLe-uGBX3HNtLlOwHEfmJBf6IPZjgdlkOLEeLMiUu71xocTM-wif6H032wlLEJvP/exec";
 const EJS_PUBLIC_KEY="QwUTOxuOY0MOmc3EP", EJS_SERVICE_ID="service_c8m7443", EJS_TEMPLATE_ID="template_nz4cyop", ADMIN_EMAIL="pex@curaviva-tg.ch", ADMIN_PW="CVTG2026!";
 
@@ -290,18 +290,18 @@ const EVENTS={
   oba:{
     name:"OBA Messe St. Gallen",
     dates:[
-      {date:"2026-08-27", slots:[{id:"morning",label:"Vormittags",time:"08:00 – 12:00",icon:"🌄"},{id:"afternoon",label:"Nachmittags",time:"12:00 – 16:30",icon:"🌞"}]},
-      {date:"2026-08-28", slots:[{id:"morning",label:"Vormittags",time:"08:00 – 12:00",icon:"🌄"},{id:"afternoon",label:"Nachmittags",time:"12:00 – 16:30",icon:"🌞"}]},
-      {date:"2026-08-29", slots:[{id:"morning",label:"Vormittags",time:"09:45 – 14:00",icon:"🌄"},{id:"afternoon",label:"Nachmittags",time:"14:00 – 17:00",icon:"🌞"}]},
-      {date:"2026-08-30", slots:[{id:"morning",label:"Vormittags",time:"09:45 – 14:00",icon:"🌄"},{id:"afternoon",label:"Nachmittags",time:"14:00 – 17:00",icon:"🌞"}]}
+      {date:"2026-08-27", slots:[{id:"morning",label:"Vormittags",time:"08:00 – 12:00",icon:"morning"},{id:"afternoon",label:"Nachmittags",time:"12:00 – 16:30",icon:"afternoon"}]},
+      {date:"2026-08-28", slots:[{id:"morning",label:"Vormittags",time:"08:00 – 12:00",icon:"morning"},{id:"afternoon",label:"Nachmittags",time:"12:00 – 16:30",icon:"afternoon"}]},
+      {date:"2026-08-29", slots:[{id:"morning",label:"Vormittags",time:"09:45 – 14:00",icon:"morning"},{id:"afternoon",label:"Nachmittags",time:"14:00 – 17:00",icon:"afternoon"}]},
+      {date:"2026-08-30", slots:[{id:"morning",label:"Vormittags",time:"09:45 – 14:00",icon:"morning"},{id:"afternoon",label:"Nachmittags",time:"14:00 – 17:00",icon:"afternoon"}]}
     ]
   },
   weinfelden:{
     name:"Berufsmesse Thurgau",
     dates:[
-      {date:"2026-09-17", slots:[{id:"morning",label:"Vormittags",time:"09:00 – 13:00",icon:"🌄"},{id:"afternoon",label:"Nachmittags",time:"13:00 – 17:00",icon:"🌞"}]},
-      {date:"2026-09-18", slots:[{id:"morning",label:"Vormittags",time:"09:00 – 13:00",icon:"🌄"},{id:"afternoon",label:"Nachmittags",time:"13:00 – 17:00",icon:"🌞"}]},
-      {date:"2026-09-19", slots:[{id:"morning",label:"Vormittags",time:"09:00 – 13:00",icon:"🌄"},{id:"afternoon",label:"Nachmittags",time:"13:00 – 17:00",icon:"🌞"}]}
+      {date:"2026-09-17", slots:[{id:"morning",label:"Vormittags",time:"09:00 – 13:00",icon:"morning"},{id:"afternoon",label:"Nachmittags",time:"13:00 – 17:00",icon:"afternoon"}]},
+      {date:"2026-09-18", slots:[{id:"morning",label:"Vormittags",time:"09:00 – 13:00",icon:"morning"},{id:"afternoon",label:"Nachmittags",time:"13:00 – 17:00",icon:"afternoon"}]},
+      {date:"2026-09-19", slots:[{id:"morning",label:"Vormittags",time:"09:00 – 13:00",icon:"morning"},{id:"afternoon",label:"Nachmittags",time:"13:00 – 17:00",icon:"afternoon"}]}
     ]
   }
 };
@@ -407,6 +407,13 @@ function renderSkeletons(){
 function getB(ev,ty,d,sl){return bk?.[ev]?.[ty]?.[d]?.[sl]||null;}
 function fmtDate(s){const d=new Date(s+"T12:00:00");return d.toLocaleDateString("de-CH",{weekday:"long",day:"numeric",month:"long",year:"numeric"});}
 
+function slotIcon(id){
+  if(id==="morning"){
+    return '<svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="3" y1="18" x2="25" y2="18" stroke="#f59e0b" stroke-width="1.8" stroke-linecap="round"/><path d="M14 17 A6 6 0 0 1 8 17" stroke="#f59e0b" stroke-width="1.8" fill="none" stroke-linecap="round"/><path d="M14 17 A6 6 0 0 0 20 17" stroke="#f59e0b" stroke-width="1.8" fill="none" stroke-linecap="round"/><line x1="14" y1="8" x2="14" y2="6" stroke="#f59e0b" stroke-width="1.8" stroke-linecap="round"/><line x1="8.5" y1="10" x2="7.1" y2="8.6" stroke="#f59e0b" stroke-width="1.8" stroke-linecap="round"/><line x1="19.5" y1="10" x2="20.9" y2="8.6" stroke="#f59e0b" stroke-width="1.8" stroke-linecap="round"/><line x1="6" y1="15" x2="4" y2="15" stroke="#f59e0b" stroke-width="1.8" stroke-linecap="round"/><line x1="22" y1="15" x2="24" y2="15" stroke="#f59e0b" stroke-width="1.8" stroke-linecap="round"/></svg>';
+  }
+  return '<svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="14" cy="14" r="5" stroke="#f59e0b" stroke-width="1.8"/><line x1="14" y1="3" x2="14" y2="1" stroke="#f59e0b" stroke-width="1.8" stroke-linecap="round"/><line x1="14" y1="27" x2="14" y2="25" stroke="#f59e0b" stroke-width="1.8" stroke-linecap="round"/><line x1="3" y1="14" x2="1" y2="14" stroke="#f59e0b" stroke-width="1.8" stroke-linecap="round"/><line x1="27" y1="14" x2="25" y2="14" stroke="#f59e0b" stroke-width="1.8" stroke-linecap="round"/><line x1="6.2" y1="6.2" x2="4.8" y2="4.8" stroke="#f59e0b" stroke-width="1.8" stroke-linecap="round"/><line x1="23.2" y1="23.2" x2="21.8" y2="21.8" stroke="#f59e0b" stroke-width="1.8" stroke-linecap="round"/><line x1="21.8" y1="6.2" x2="23.2" y2="4.8" stroke="#f59e0b" stroke-width="1.8" stroke-linecap="round"/><line x1="4.8" y1="23.2" x2="6.2" y2="21.8" stroke="#f59e0b" stroke-width="1.8" stroke-linecap="round"/></svg>';
+}
+
 function render(){
   const c=CFG[cType], ev=EVENTS[cEvent];
   document.getElementById("org-s").className="org-btn"+(cType==="spitex"?" active-s":"");
@@ -439,9 +446,9 @@ function render(){
       const b=getB(cEvent,cType,date,slot.id);
       const el=document.createElement("div");el.className="slot"+(b?" slot-booked":"");
       if(b){
-        el.innerHTML='<div class="slot-icon">'+slot.icon+'</div><div class="slot-name dimmed">'+slot.label+'</div><div class="slot-time dimmed">'+slot.time+'</div><div class="booked-box" style="background:'+c.pill+';border:1.5px solid '+c.pb+'"><div class="booked-label" style="color:'+c.textColor+'">&#10003; BELEGT</div><div class="booked-org" style="color:'+c.accent+'">'+b.inst+'</div><div class="booked-person">'+b.bvname+' &middot; '+b.tel+'</div><button class="delete-btn" onclick="askDelete(\''+cEvent+'\',\''+cType+'\',\''+date+'\',\''+slot.id+'\')">&#x1F5D1; Löschen</button></div>';
+        el.innerHTML='<div class="slot-icon">'+slotIcon(slot.id)+'</div><div class="slot-name dimmed">'+slot.label+'</div><div class="slot-time dimmed">'+slot.time+'</div><div class="booked-box" style="background:'+c.pill+';border:1.5px solid '+c.pb+'"><div class="booked-label" style="color:'+c.textColor+'">&#10003; BELEGT</div><div class="booked-org" style="color:'+c.accent+'">'+b.inst+'</div><div class="booked-person">'+b.bvname+' &middot; '+b.tel+'</div><button class="delete-btn" onclick="askDelete(\''+cEvent+'\',\''+cType+'\',\''+date+'\',\''+slot.id+'\')">&#x1F5D1; Löschen</button></div>';
       }else{
-        el.innerHTML='<div class="slot-icon">'+slot.icon+'</div><div class="slot-name">'+slot.label+'</div><div class="slot-time">'+slot.time+'</div><button class="book-btn" onclick="openM(\''+date+'\',\''+slot.id+'\',\''+slot.label+'\',\''+slot.time+'\',\''+slot.icon+'\')">+ Anmelden</button>';
+        el.innerHTML='<div class="slot-icon">'+slotIcon(slot.id)+'</div><div class="slot-name">'+slot.label+'</div><div class="slot-time">'+slot.time+'</div><button class="book-btn" onclick="openM(\''+date+'\',\''+slot.id+'\',\''+slot.label+'\',\''+slot.time+'\',\''+slot.id+'\')">+ Anmelden</button>';
       }
       grid.appendChild(el);
     });
