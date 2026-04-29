@@ -164,6 +164,14 @@
     .switch-type-btn { padding: 5px 12px; border-radius: 20px; border: 1.5px solid #cbd5e1; background: transparent; color: #64748b; font-size: 12px; font-weight: 700; cursor: pointer; font-family: inherit; transition: all 0.2s; margin-left: auto; }
     .switch-type-btn:hover { background: #f0fdfd; border-color: #2d8c8c; color: #2d8c8c; }
 
+    /* ── Globaler Lade-Overlay ── */
+    .global-loader { display: none; position: fixed; inset: 0; background: rgba(15,23,42,0.5); backdrop-filter: blur(3px); z-index: 500; align-items: center; justify-content: center; flex-direction: column; gap: 16px; }
+    .global-loader.show { display: flex; }
+    .global-loader-spinner { width: 52px; height: 52px; border: 4px solid rgba(255,255,255,0.25); border-top-color: #fff; border-radius: 50%; animation: spin 0.7s linear infinite; }
+    .global-loader-text { color: #fff; font-size: 1rem; font-weight: 700; letter-spacing: 0.3px; text-align: center; line-height: 1.5; }
+    .global-loader-sub { color: rgba(255,255,255,0.7); font-size: 0.8rem; margin-top: -8px; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
     .error-banner { background: #fff7ed; border: 1.5px solid #fed7aa; border-radius: 12px; padding: 14px 18px; margin-bottom: 20px; font-size: 13px; color: #ea580c; display: none; }
     .error-banner.show { display: block; }
     @media(max-width:560px){ .slots-grid,.field-row{grid-template-columns:1fr} .event-tabs{flex-direction:column} .hero-title{font-size:24px} .org-btn{font-size:13px} }
@@ -172,6 +180,13 @@
 <body>
 
 <div class="loading-bar" id="loading-bar"></div>
+
+<!-- Globaler Lade-Overlay -->
+<div class="global-loader" id="global-loader">
+  <div class="global-loader-spinner"></div>
+  <div class="global-loader-text" id="global-loader-text">Bitte warten…</div>
+  <div class="global-loader-sub" id="global-loader-sub"></div>
+</div>
 
 <div class="hero-header">
   <div class="hero-title">Anmeldung Standbetreuung</div>
@@ -362,6 +377,15 @@ const CFG={
 let cType="spitex", cEvent="oba", pDate=null, pSlot=null, isAdmin=false, delTarget=null;
 let bk={};
 
+function showLoader(text, sub){
+  document.getElementById("global-loader-text").textContent = text || "Bitte warten…";
+  document.getElementById("global-loader-sub").textContent  = sub  || "";
+  document.getElementById("global-loader").classList.add("show");
+}
+function hideLoader(){
+  document.getElementById("global-loader").classList.remove("show");
+}
+
 function setLoading(on){
   const bar=document.getElementById("loading-bar");
   if(on){bar.className="loading-bar show";}
@@ -506,13 +530,17 @@ function closeDelete(){document.getElementById("delete-overlay").classList.remov
 async function confirmDelete(){
   if(!delTarget)return;
   const{ev,ty,date,slotId}=delTarget;
+  closeDelete();
+  showLoader("Buchung wird storniert…", "Bitte nicht schliessen");
   try{
     const delParams=new URLSearchParams({action:"delete",event:ev,type:ty,date:date,slot:slotId});
     await fetch(API+"?"+delParams.toString());
     if(!bk[ev])bk[ev]={};if(!bk[ev][ty])bk[ev][ty]={};if(!bk[ev][ty][date])bk[ev][ty][date]={};
     delete bk[ev][ty][date][slotId];
   }catch(e){console.warn(e);}
-  closeDelete();await loadData();
+  showLoader("Slots werden aktualisiert…", "Einen Moment bitte");
+  await loadData();
+  hideLoader();
 }
 
 function openM(date,slotId,slotLabel,slotTime,slotIcon){
@@ -548,6 +576,7 @@ async function doBook(){
   };
   document.getElementById("btn-ok").disabled=true;
   document.getElementById("sending").classList.add("show");
+  showLoader("Buchung wird gespeichert…", "Bitte nicht schliessen");
   try{
     const bookParams=new URLSearchParams({action:"book",event:cEvent,type:cType,date:pDate,slot:pSlot.id,inst:d.inst,bvname:d.bvname,bvemail:d.bvemail,l1:d.l1,l2:d.l2||"–",sm:d.sm,tel:d.tel});
     const bookRes=await fetch(API+"?"+bookParams.toString());
@@ -561,8 +590,11 @@ async function doBook(){
     sent=true;
   }catch(e){console.warn(e);}
   document.getElementById("sending").classList.remove("show");
+  hideLoader();
   closeModal();
-  await loadData(); // Buchungsstand vom Server neu laden
+  showLoader("Slots werden aktualisiert…", "Einen Moment bitte");
+  await loadData();
+  hideLoader(); // Buchungsstand vom Server neu laden
   document.getElementById("s-info").innerHTML='<strong style="color:#0f172a">'+d.inst+'</strong> ist angemeldet für<br><strong style="color:#0f172a">'+EVENTS[cEvent].name+'</strong><br>'+fmtDate(pDate)+'<br>'+pSlot.icon+' '+pSlot.label+' · '+pSlot.time;
   const note=document.getElementById("s-note");note.className="success-note"+(sent?"":" warn");
   note.innerHTML=sent?"📧 Bestätigung gesendet an <strong>"+d.bvemail+"</strong> und pex@curaviva-tg.ch":"⚠️ Anmeldung gespeichert – E-Mail konnte nicht gesendet werden.";
