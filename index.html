@@ -165,12 +165,21 @@
     .switch-type-btn:hover { background: #f0fdfd; border-color: #2d8c8c; color: #2d8c8c; }
 
     /* ── Globaler Lade-Overlay ── */
-    .global-loader { display: none; position: fixed; inset: 0; background: rgba(15,23,42,0.5); backdrop-filter: blur(3px); z-index: 500; align-items: center; justify-content: center; flex-direction: column; gap: 16px; }
+    .global-loader { display: none; position: fixed; inset: 0; background: rgba(15,23,42,0.6); backdrop-filter: blur(5px); z-index: 500; align-items: center; justify-content: center; }
     .global-loader.show { display: flex; }
-    .global-loader-spinner { width: 52px; height: 52px; border: 4px solid rgba(255,255,255,0.25); border-top-color: #fff; border-radius: 50%; animation: spin 0.7s linear infinite; }
-    .global-loader-text { color: #fff; font-size: 1rem; font-weight: 700; letter-spacing: 0.3px; text-align: center; line-height: 1.5; }
-    .global-loader-sub { color: rgba(255,255,255,0.7); font-size: 0.8rem; margin-top: -8px; }
-    @keyframes spin { to { transform: rotate(360deg); } }
+    .global-loader-card { background: #fff; border-radius: 20px; padding: 40px 36px; text-align: center; box-shadow: 0 24px 64px rgba(0,0,0,0.25); width: 300px; max-width: 90vw; animation: loaderPop 0.25s cubic-bezier(0.34,1.56,0.64,1); }
+    @keyframes loaderPop { from { opacity:0; transform: scale(0.85); } to { opacity:1; transform: scale(1); } }
+    .global-loader-ring { display: inline-block; position: relative; width: 64px; height: 64px; margin-bottom: 20px; }
+    .global-loader-ring div { box-sizing: border-box; display: block; position: absolute; width: 56px; height: 56px; margin: 4px; border: 5px solid transparent; border-top-color: #2d8c8c; border-radius: 50%; animation: loaderSpin 1s cubic-bezier(0.5,0,0.5,1) infinite; }
+    .global-loader-ring div:nth-child(2) { border-top-color: #4aab6d; animation-delay: -0.3s; }
+    .global-loader-ring div:nth-child(3) { border-top-color: #a0c840; animation-delay: -0.15s; }
+    @keyframes loaderSpin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    .global-loader-title { font-size: 1rem; font-weight: 800; color: #0f172a; margin-bottom: 6px; }
+    .global-loader-sub { font-size: 0.8rem; color: #94a3b8; }
+    .global-loader-dots span { animation: loaderDot 1.4s infinite; display: inline-block; }
+    .global-loader-dots span:nth-child(2) { animation-delay: 0.2s; }
+    .global-loader-dots span:nth-child(3) { animation-delay: 0.4s; }
+    @keyframes loaderDot { 0%,80%,100% { opacity: 0.2; transform: scale(0.8); } 40% { opacity: 1; transform: scale(1); } }
 
     .error-banner { background: #fff7ed; border: 1.5px solid #fed7aa; border-radius: 12px; padding: 14px 18px; margin-bottom: 20px; font-size: 13px; color: #ea580c; display: none; }
     .error-banner.show { display: block; }
@@ -183,9 +192,18 @@
 
 <!-- Globaler Lade-Overlay -->
 <div class="global-loader" id="global-loader">
-  <div class="global-loader-spinner"></div>
-  <div class="global-loader-text" id="global-loader-text">Bitte warten…</div>
-  <div class="global-loader-sub" id="global-loader-sub"></div>
+  <div class="global-loader-card">
+    <div class="global-loader-ring">
+      <div></div><div></div><div></div>
+    </div>
+    <div class="global-loader-title" id="global-loader-text">Bitte warten…</div>
+    <div class="global-loader-sub">
+      <span id="global-loader-sub"></span>
+      <span class="global-loader-dots">
+        <span>●</span><span>●</span><span>●</span>
+      </span>
+    </div>
+  </div>
 </div>
 
 <div class="hero-header">
