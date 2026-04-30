@@ -301,8 +301,8 @@
 </div>
 
 <div class="switch-type-bar" id="switch-bar" style="display:none;">
-  <span class="switch-type-label">Organisation: <strong id="switch-label">Spitex</strong></span>
-  <button class="switch-type-btn" onclick="openWelcome()">↕ Organisation wechseln</button>
+  <span class="switch-type-label">Ansicht: <strong id="switch-label">Spitex</strong></span>
+  <button class="switch-type-btn" onclick="openWelcome()">↕ Ansicht wechseln</button>
 </div>
 
 <div class="container">
@@ -431,7 +431,7 @@
     <div class="modal-slot-info" id="m-slot"></div>
 
     <div class="form-section-title">Institution</div>
-    <div class="field"><label>NAME DER INSTITUTION *</label><input id="f-inst" type="text" placeholder="z.B. Spitex Zürich Nord" oninput="chk()"/></div>
+    <div class="field"><label>NAME DER INSTITUTION *</label><input id="f-inst" type="text" oninput="chk()"/></div>
 
     <div class="form-section-title">Bildungsverantwortliche/r</div>
     <div class="field-row">
@@ -443,13 +443,6 @@
     <div class="field-row">
       <div class="field"><label>1. LERNENDE/R *</label><input id="f-l1" type="text" placeholder="Vorname Nachname" oninput="chk()"/></div>
       <div class="field"><label>2. LERNENDE/R <span class="optional-tag">OPTIONAL</span></label><input id="f-l2" type="text" placeholder="Vorname Nachname (optional)"/></div>
-    </div>
-
-    <div class="form-section-title">Social Media Beauftragte/r</div>
-    <div class="field">
-      <label>NAME *</label>
-      <input id="f-sm" type="text" placeholder="Vorname Nachname" oninput="chk()"/>
-      <div class="field-hint" id="sm-hint">Diese Person ist den ganzen Tag für Social Media Updates verantwortlich und betreut zusammen mit der Spitex-Person den Kanal <strong>@leben_influencen</strong> auf TikTok &amp; Instagram (Storys &amp; Posts).</div>
     </div>
 
     <div class="form-section-title">Weiteres</div>
@@ -494,18 +487,18 @@ const EVENTS={
   oba:{
     name:"OBA Messe St. Gallen",
     dates:[
-      {date:"2026-08-27", slots:[{id:"morning",label:"Vormittags",time:"08:00 – 12:30",icon:"🌄"},{id:"afternoon",label:"Nachmittags",time:"12:00 – 16:30",icon:"🌞"}]},
-      {date:"2026-08-28", slots:[{id:"morning",label:"Vormittags",time:"08:00 – 12:30",icon:"🌄"},{id:"afternoon",label:"Nachmittags",time:"12:00 – 16:30",icon:"🌞"}]},
-      {date:"2026-08-29", slots:[{id:"morning",label:"Vormittags",time:"09:45 – 14:30",icon:"🌄"},{id:"afternoon",label:"Nachmittags",time:"14:00 – 17:00",icon:"🌞"}]},
-      {date:"2026-08-30", slots:[{id:"morning",label:"Vormittags",time:"09:45 – 14:30",icon:"🌄"},{id:"afternoon",label:"Nachmittags",time:"14:00 – 17:00",icon:"🌞"}]}
+      {date:"2026-08-27", slots:[{id:"morning",label:"Vormittags",time:"08:00 – 12:00",icon:"🌄"},{id:"afternoon",label:"Nachmittags",time:"12:00 – 16:30",icon:"🌞"}]},
+      {date:"2026-08-28", slots:[{id:"morning",label:"Vormittags",time:"08:00 – 12:00",icon:"🌄"},{id:"afternoon",label:"Nachmittags",time:"12:00 – 16:30",icon:"🌞"}]},
+      {date:"2026-08-29", slots:[{id:"morning",label:"Vormittags",time:"09:45 – 14:00",icon:"🌄"},{id:"afternoon",label:"Nachmittags",time:"14:00 – 17:00",icon:"🌞"}]},
+      {date:"2026-08-30", slots:[{id:"morning",label:"Vormittags",time:"09:45 – 14:00",icon:"🌄"},{id:"afternoon",label:"Nachmittags",time:"14:00 – 17:00",icon:"🌞"}]}
     ]
   },
   weinfelden:{
     name:"Berufsmesse Thurgau",
     dates:[
-      {date:"2026-09-17", slots:[{id:"morning",label:"Vormittags",time:"09:00 – 13:30",icon:"🌄"},{id:"afternoon",label:"Nachmittags",time:"13:00 – 17:00",icon:"🌞"}]},
-      {date:"2026-09-18", slots:[{id:"morning",label:"Vormittags",time:"09:00 – 13:30",icon:"🌄"},{id:"afternoon",label:"Nachmittags",time:"13:00 – 17:00",icon:"🌞"}]},
-      {date:"2026-09-19", slots:[{id:"morning",label:"Vormittags",time:"09:00 – 13:30",icon:"🌄"},{id:"afternoon",label:"Nachmittags",time:"13:00 – 17:00",icon:"🌞"}]}
+      {date:"2026-09-17", slots:[{id:"morning",label:"Vormittags",time:"09:00 – 13:00",icon:"🌄"},{id:"afternoon",label:"Nachmittags",time:"13:00 – 17:00",icon:"🌞"}]},
+      {date:"2026-09-18", slots:[{id:"morning",label:"Vormittags",time:"09:00 – 13:00",icon:"🌄"},{id:"afternoon",label:"Nachmittags",time:"13:00 – 17:00",icon:"🌞"}]},
+      {date:"2026-09-19", slots:[{id:"morning",label:"Vormittags",time:"09:00 – 13:00",icon:"🌄"},{id:"afternoon",label:"Nachmittags",time:"13:00 – 17:00",icon:"🌞"}]}
     ]
   }
 };
@@ -680,7 +673,6 @@ function finishOnboarding() {
   cType = _pendingOrg;
   cEvent = _pendingEvent;
   document.getElementById("switch-label").textContent = CFG[cType].label;
-  document.getElementById("sm-hint").innerHTML = CFG[cType].smHint;
   render();
 }
 
@@ -690,7 +682,6 @@ function chooseType(t){
   document.getElementById("switch-bar").style.display="flex";
   document.getElementById("switch-label").textContent=CFG[t].label;
   cType=t;
-  document.getElementById("sm-hint").innerHTML=CFG[t].smHint;
   render();
 }
 
@@ -713,7 +704,6 @@ function openWelcome(){
 
 function switchType(t){
   cType=t;
-  document.getElementById("sm-hint").innerHTML=CFG[t].smHint;
   render();
 }
 function switchEvent(e){cEvent=e;render();}
@@ -760,20 +750,19 @@ function openM(date,slotId,slotLabel,slotTime,slotIcon){
   document.getElementById("m-sub").style.color=c.accent;
   document.getElementById("m-date").textContent=fmtDate(date)+" · "+EVENTS[cEvent].name;
   document.getElementById("m-slot").textContent=slotIcon+" "+slotLabel+" · "+slotTime;
-  document.getElementById("sm-hint").innerHTML=c.smHint;
-  ["f-inst","f-bvname","f-bvemail","f-l1","f-l2","f-sm","f-tel"].forEach(id=>{document.getElementById(id).value="";});
+  ["f-inst","f-bvname","f-bvemail","f-l1","f-l2","f-tel"].forEach(id=>{document.getElementById(id).value="";});
   document.getElementById("btn-ok").disabled=true;
   document.getElementById("sending").classList.remove("show");
   document.getElementById("booking-overlay").classList.add("show");
 }
 function closeModal(){document.getElementById("booking-overlay").classList.remove("show");}
 function chk(){
-  const required=["f-inst","f-bvname","f-bvemail","f-l1","f-sm","f-tel"];
+  const required=["f-inst","f-bvname","f-bvemail","f-l1","f-tel"];
   document.getElementById("btn-ok").disabled=!required.every(id=>document.getElementById(id).value.trim());
 }
 
 async function doBook(){
-  const required=["f-inst","f-bvname","f-bvemail","f-l1","f-sm","f-tel"];
+  const required=["f-inst","f-bvname","f-bvemail","f-l1","f-tel"];
   if(!required.every(id=>document.getElementById(id).value.trim()))return;
   const d={
     inst:document.getElementById("f-inst").value.trim(),
@@ -781,7 +770,6 @@ async function doBook(){
     bvemail:document.getElementById("f-bvemail").value.trim(),
     l1:document.getElementById("f-l1").value.trim(),
     l2:document.getElementById("f-l2").value.trim()||"–",
-    sm:document.getElementById("f-sm").value.trim(),
     tel:document.getElementById("f-tel").value.trim()
   };
   document.getElementById("btn-ok").disabled=true;
@@ -796,7 +784,7 @@ async function doBook(){
   let sent=false;
   try{
     emailjs.init(EJS_PUBLIC_KEY);
-    await emailjs.send(EJS_SERVICE_ID,EJS_TEMPLATE_ID,{to_email:d.bvemail,to_name:d.bvname,admin_email:ADMIN_EMAIL,event_name:EVENTS[cEvent].name,org_type:CFG[cType].label,datum:fmtDate(pDate),zeitslot:pSlot.label+" · "+pSlot.time,institution:d.inst,bv_name:d.bvname,bv_email:d.bvemail,lernende1:d.l1,lernende2:d.l2,socialmedia:d.sm,telefon:d.tel,reply_to:d.bvemail});
+    await emailjs.send(EJS_SERVICE_ID,EJS_TEMPLATE_ID,{to_email:d.bvemail,to_name:d.bvname,admin_email:ADMIN_EMAIL,event_name:EVENTS[cEvent].name,org_type:CFG[cType].label,datum:fmtDate(pDate),zeitslot:pSlot.label+" · "+pSlot.time,institution:d.inst,bv_name:d.bvname,bv_email:d.bvemail,lernende1:d.l1,lernende2:d.l2,telefon:d.tel,reply_to:d.bvemail});
     sent=true;
   }catch(e){console.warn(e);}
   document.getElementById("sending").classList.remove("show");
